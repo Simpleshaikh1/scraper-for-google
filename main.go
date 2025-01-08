@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/Puerkitobio/goquery"
+	"golang.org/x/net/proxy"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -44,6 +45,17 @@ func buildGoogleUrls(searchTerm, countryCode, languageCode string,  pages, count
 		return nil, err
 	}
 	return toScrape, nil
+}
+
+func getScrapeClient(proxyString interface{}) *http.Client {
+	switch v:= proxyString.(type){
+
+	case string:
+		proxyUrl, _ := url.Parse(v)
+		return &http.Client{Transport: &http.Transport{Proxy: http.ProxyURL(proxyUrl)}}
+	default:
+		return &http.Client{}
+	}
 }
 
 func GoogleScrape(searchTerm, countryCode, languageCode string, proxyString interface{}, pages, count, backoff int) ([]SearchResult, error) {
