@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/Puerkitobio/goquery"
-	"golang.org/x/net/proxy"
+	"github.com/PuerkitoBio/goquery"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -336,7 +335,7 @@ func scrapeClientRequest(searchUrl string, proxyString interface{}) (*http.Respo
 }
 
 func main() {
-	res, err := GoogleScrape("akhil Sharma", "com", "en", nill, 1, 30, 10)
+	res, err := GoogleScrape("akhil Sharma", "com", "en", nil, 1, 30, 10)
 	if err == nil {
 		for _, res := range res {
 			fmt.Println(res)
