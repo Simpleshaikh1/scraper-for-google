@@ -72,7 +72,19 @@ func GoogleScrape(searchTerm, countryCode, languageCode string, proxyString inte
 }
 
 func scrapeClientRequest(searchUrl string, proxyString interface{}) (*http.Response, error) {
+	baseClient := getScrapeClient(proxyString)
+	req, _ := http.NewRequest("GET", searchUrl, nil)
+	req.Header.Set("User-Agent", randomUserAgent())
 
+	res, err := baseClient.Do(req)
+	if res.StatusCode != 200 {
+		err:= fmt.Errorf("scrapper recieved a non 200 status code suggesting a ban")
+		return nil, err
+	}
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
 func main() {
